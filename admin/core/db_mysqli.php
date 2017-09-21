@@ -50,7 +50,19 @@ class Model_mysqli extends Database
 			$select = "*";
 		}
 
-		$sql = "SELECT ".$select." FROM ".$this->table;
+		$sql = "SELECT ".$select." FROM ".$this->table." ";
+
+		if ($join) {
+			$data = null;
+			foreach ($join as $val) {
+				// val[0] == table
+				// val[1] == field penghubung
+				// val[2] == type(INNER or LEFT or RIGHT or FULL)
+				$type = isset($val[2]) ? $val[2] : "INNER";
+				$data .= $type." JOIN ".$val[0]." ON ".$val[1]." ";
+			}
+			$sql .= $data;
+		}
 
 		if ($where) {
 			$sql .= " WHERE ";
@@ -81,18 +93,6 @@ class Model_mysqli extends Database
 				}
 				$sql .= substr($field, 3);
 			}
-		}
-
-		if ($join) {
-			$data = null;
-			foreach ($join as $val) {
-				// val[0] == table
-				// val[1] == field penghubung
-				// val[2] == type(INNER or LEFT or RIGHT or FULL)
-				$type = isset($val[2]) ? $val[2] : "INNER";
-				$data .= $type." JOIN ".$val[0]." ON ".$val[1]." ";
-			}
-			$sql .= $data;
 		}
 
 		if ($orderBy) {
@@ -116,12 +116,25 @@ class Model_mysqli extends Database
 		exit();*/
 
 		$result = $this->db->query($sql);
-		return $result->fetch_all(MYSQLI_ASSOC);
+		return $result->fetch_all(MYSQLI_ASSOC);	
 	}
 
 	public function getCount($where=false,$search=false,$join=false)
 	{
-		$sql = "SELECT * FROM ".$this->table;
+		$sql = "SELECT * FROM ".$this->table." ";
+
+		if ($join) {
+			$data = null;
+			foreach ($join as $val) {
+				// val[0] == table
+				// val[1] == field penghubung
+				// val[2] == type(INNER or LEFT or RIGHT or FULL)
+				$type = isset($val[2]) ? $val[2] : "INNER";
+				$data .= $type." JOIN ".$val[0]." ON ".$val[1]." ";
+			}
+			$sql .= $data;
+		}
+
 		if ($where) {
 			$sql .= " WHERE ";
 			$field = null;
@@ -151,18 +164,6 @@ class Model_mysqli extends Database
 				}
 				$sql .= substr($field, 3);
 			}
-		}
-
-		if ($join) {
-			$data = null;
-			foreach ($join as $val) {
-				// val[0] == table
-				// val[1] == field penghubung
-				// val[2] == type(INNER or LEFT or RIGHT or FULL)
-				$type = isset($val[2]) ? $val[2] : "INNER";
-				$data .= $type." JOIN ".$val[0]." ON ".$val[1]." ";
-			}
-			$sql .= $data;
 		}
 		$result = $this->db->query($sql);
 		return $result->num_rows;
