@@ -36,7 +36,6 @@
                     "jumlah"        =>  $jumlah
                 );
 
-
         $checkNama = $model->getByWhere(array("nama" => $nama));
         if ($checkNama) {
             $errorNama = Helper::spanDanger("Opps, Nama sudah terdaftar..!");
@@ -77,7 +76,7 @@
         }
     }
 
-    var_dump($_POST);
+    // var_dump($_POST);
 
 ?>
 
@@ -95,31 +94,33 @@
                     </div>
                     <div class="form-group">
                         <label>Nama</label>
-                        <input type="text" class="form-control" name="nama" value="" placeholder="Nama Rumah" required>
+                        <input type="text" class="form-control" name="nama" value="<?php echo isset($nama) ? $nama : ""; ?>" placeholder="Nama Rumah" required>
                         <div><?php echo isset($errorNama) ? $errorNama : ""; ?></div>
                     </div>
                     <div class="form-group">
                         <label>Type</label>
                         <select name="kategori" required class="form-control">
-                            <option value="">--pilih kategori--</option>
+                            <option value="">--Pilih Type Rumah--</option>
                             <?php 
                                 $modelKategori = new Model_mysqli();
                                 $modelKategori->setTable("rumah_kategori");
 
                                 $result = $modelKategori->findData(false,false,array("type" => "ASC"));
                             ?>
-                            <option>kosong</option>
+                            <?php foreach($result as $val) : ?>
+                                    <option value="<?php echo $val['id']; ?>"><?php echo $val["type"]; ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>Harga</label>
-                        <input type="number" class="form-control" name="harga" required placeholder="Harga">
+                        <input type="number" class="form-control" name="harga" value="<?php echo isset($harga) ? $harga : ""; ?>" required placeholder="Harga">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                       <label>Lokasi</label>
-                      <textarea name="lokasi" class="form-control" rows="3" required placeholder="Lokasi Perumahan"></textarea>
+                      <textarea name="lokasi" class="form-control" rows="3" required placeholder="Lokasi Perumahan"><?php echo isset($lokasi) ? $lokasi : ""; ?></textarea>
                     </div>
 
                     <label>Blok & Jumlah Rumah</label> 

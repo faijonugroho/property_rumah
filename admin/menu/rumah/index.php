@@ -57,7 +57,7 @@
 				</form>
 		  	</div>
 		</div>
-	    <table id="tableRumah" class="table table-striped table-bordered table-sm table-responsive" style="width:100%">
+	    <table id="tableRumah" class="table table-bordered table-hover table-sm table-responsive" style="width:100%">
 			<thead class="">
 				<tr>
     				<th>No</th>
@@ -75,31 +75,52 @@
 			</thead>
 			<tbody>
 				<?php 
+					$lastName = "";
+					$lastId = "";
 					$no = ($page - 1) * 10;
 					foreach($result as $item) : 
 						$no++;
+						$blokResult = explode("-||-", $item["blok"]);
+						$jumlahResult = explode("-||-", $item["jumlah"]);
 				?>
-						<tr>
-							<td><?php echo $no; ?></td>
-							<td>
-								<?php $img = $item["photo"] == "" ? "img/omah_omahan.png" : "upload/rumah/".$item["photo"]; ?>
-								<img src="<?php echo $img; ?>" class="img-responsive img-thumbnail" style="width:50px; height:55px;">		
-							</td>
-							<td><?php echo $item["nama"]; ?></td>
-							<td>type</td>
-							<td><?php echo $item["harga"]; ?></td>
-							<td><?php echo $item["lokasi"]; ?></td>
-							<td><?php echo $item["blok_rumah"]; ?></td>
-							<td><?php echo $item["jumlah_rumah"]; ?></td>
 
-							<?php if($admin["role"] == "super_admin") : ?>
-							<td style="width: 18%;">
-								<a href="?menu=rumah/update/<?php echo $item["id"].$redirect; ?>" class="btn btn-outline-warning btn-sm"><i class="fa fa-edit"></i> Edit</a> &nbsp; &nbsp;
-								<a href="?menu=rumah&delete=<?php echo $item["id"].$redirect; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data ini.?')"><i class="fa fa-trash-o"></i> Hapus</a>
-							</td>
-							<?php endif; ?>
+						<?php 
+							for ($i=0; $i < count($blokResult); $i++) { 
+						 ?>
+						<tr>
+							<?php if($lastName !== $item["nama"]) { ?>
+								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $no; ?></td>
+								<td rowspan="<?php echo count($blokResult); ?>">
+									<?php $img = $item["photo"] == "" ? "img/omah_omahan.png" : "upload/rumah/".$item["photo"]; ?>
+									<img src="<?php echo $img; ?>" class="img-responsive img-thumbnail" style="width:50px; height:55px;">		
+								</td>
+								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $item["nama"]; ?></td>
+								<td rowspan="<?php echo count($blokResult); ?>">type</td>
+								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $item["harga"]; ?></td>
+								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $item["lokasi"]; ?></td>
+							<?php 
+								} else { }
+							?>
+								<td><?php echo $blokResult[$i]; ?></td>
+								<td><?php echo $jumlahResult[$i]; ?></td>
+
+							<?php if($lastName !== $item["nama"]) { ?>
+								<?php if($admin["role"] == "super_admin") : ?>
+								<td rowspan="<?php echo count($blokResult); ?>" style="width: 18%;">
+									<a href="?menu=rumah/update/<?php echo $item["id"].$redirect; ?>" class="btn btn-outline-warning btn-sm"><i class="fa fa-edit"></i> Edit</a> &nbsp; &nbsp;
+									<a href="?menu=rumah&delete=<?php echo $item["id"].$redirect; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data ini.?')"><i class="fa fa-trash-o"></i> Hapus</a>
+								</td>
+								<?php endif; ?>
+							<?php 
+									$lastName = $item["nama"];
+								} else { }
+							?>
 						</tr>
+						<?php
+							} // end for 
+						?>
 				<?php 
+
 					endforeach; 
 
 					if($result == []) :
