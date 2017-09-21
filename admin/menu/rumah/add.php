@@ -1,12 +1,18 @@
+<?php 
+    if ($admin["role"] != "super_admin") {
+        echo "<script> window.location.href = '?menu=rumah'; </script>";
+    }
+?>
+
 <!-- Breadcrumbs -->
 <ol class="breadcrumb">
     <li class="breadcrumb-item">
       <a href="/property/admin/">Dashboard</a>
     </li>
     <li class="breadcrumb-item">
-      <a href="?menu=rumah">rumah</a>
+      <a href="?menu=rumah">Rumah</a>
     </li>
-    <li class="breadcrumb-item active">Profile</li>
+    <li class="breadcrumb-item active">Tambah</li>
 </ol>
 
 <?php 
@@ -21,56 +27,61 @@
         $harga = $_POST["harga"];
         $lokasi = $_POST["lokasi"];
 
-        $blok = $_POST["blok"];
-        $jumlah = $_POST["jumlah"];
-
-        $blok = implode("-||-", $blok);
-        $jumlah = implode("-||-", $jumlah);
-
-        $data = array(
-                    "nama"          =>  trim($nama),
-                    "kategori_id"   =>  $kategori,
-                    "harga"         =>  $harga,
-                    "lokasi"        =>  $lokasi,
-                    "blok"          =>  $blok,
-                    "jumlah"        =>  $jumlah
-                );
-
         $checkNama = $model->getByWhere(array("nama" => $nama));
         if ($checkNama) {
             $errorNama = Helper::spanDanger("Opps, Nama sudah terdaftar..!");
         } else {
-            $file_name = explode(".",$file_photo["name"]);
-            $file_name = sha1(uniqid()).".".end($file_name);
-            $path = "upload/rumah/".basename($file_name);
-            $imageFileType = pathinfo($path,PATHINFO_EXTENSION);
-              
-            if ($file_photo["tmp_name"] !== "") {
-                $allowType = array("jpg","jpeg","png","gif");
-                if (!in_array($imageFileType,$allowType)) {
-                    $errorPhoto = Helper::spanDanger("Format gambar tidak di boleh kan...")."<br>";
-                    $errorPhoto .= Helper::spanDanger("yang di bolehkan adalah jpg,jpeg,png dan gif.!");
-                } else {
-                    if ($file_photo["size"] > (2010 * 1024)) {
-                        $errorPhoto = Helper::spanDanger("Ukuran gambar ke gedean.! <br>");
-                        $errorPhoto = Helper::spanDanger("Max 2 mb saja.!");
+            if (!isset($_POST["blok"]) && !isset($_POST["jumlah"])) {
+                $errorBlokJumlah = Helper::spanDanger("Eit..etiss..!!<br>Blok dan jumlah rumah belum di isi..<br>Silahkan klik tombol tambah warna hijau di atas.!");
+            } else {
+
+                $blok = $_POST["blok"];
+                $jumlah = $_POST["jumlah"];
+
+                $blok = implode("-||-", $blok);
+                $jumlah = implode("-||-", $jumlah);
+
+                $data = array(
+                            "nama"          =>  trim($nama),
+                            "kategori_id"   =>  $kategori,
+                            "harga"         =>  $harga,
+                            "lokasi"        =>  $lokasi,
+                            "blok"          =>  $blok,
+                            "jumlah"        =>  $jumlah
+                        );
+
+                $file_name = explode(".",$file_photo["name"]);
+                $file_name = sha1(uniqid()).".".end($file_name);
+                $path = "upload/rumah/".basename($file_name);
+                $imageFileType = pathinfo($path,PATHINFO_EXTENSION);
+                  
+                if ($file_photo["tmp_name"] !== "") {
+                    $allowType = array("jpg","jpeg","png","gif");
+                    if (!in_array($imageFileType,$allowType)) {
+                        $errorPhoto = Helper::spanDanger("Format gambar tidak di boleh kan...")."<br>";
+                        $errorPhoto .= Helper::spanDanger("yang di bolehkan adalah jpg,jpeg,png dan gif.!");
                     } else {
-                        $data["photo"] = $file_name;
-                        move_uploaded_file($file_photo["tmp_name"],$path);
+                        if ($file_photo["size"] > (2010 * 1024)) {
+                            $errorPhoto = Helper::spanDanger("Ukuran gambar ke gedean.! <br>");
+                            $errorPhoto = Helper::spanDanger("Max 2 mb saja.!");
+                        } else {
+                            $data["photo"] = $file_name;
+                            move_uploaded_file($file_photo["tmp_name"],$path);
+                        }
                     }
                 }
-            }
 
-            if(!isset($errorPhoto)) {
-                if (!empty(trim($nama)) && !empty(trim($lokasi))) {   
-                    $insert = $model->insert($data);
-                    if($insert){
-                        echo "<script> alert('Tambah data berhasil di prosess.'); </script>";
-                        echo "<script> document.location.href = '?menu=rumah' </script>";
+                if(!isset($errorPhoto)) {
+                    if (!empty(trim($nama)) && !empty(trim($lokasi))) {   
+                        $insert = $model->insert($data);
+                        if($insert){
+                            echo "<script> alert('Tambah data berhasil di prosess.'); </script>";
+                            echo "<script> document.location.href = '?menu=rumah' </script>";
+                        }
+                    } else {
+                        $errorFormData = "<span class='text-danger'>Nama atau Lokasi tidak boleh kosong..!</span>";
+                        $errorFormData .=  "<br><br>";
                     }
-                } else {
-                    $errorFormData = "<span class='text-danger'>Nama atau Lokasi tidak boleh kosong..!</span>";
-                    $errorFormData .=  "<br><br>";
                 }
             }
         }
@@ -127,13 +138,8 @@
                     <button type="button" id="btnAddBlokJumlah" class="btn btn-sm btn-success"><i class="fa fa-plus"></i></button>
                     <div class="card">
                         <div class="card-body">
+                            <div id="errorBlokJumlah"><?php echo isset($errorBlokJumlah) ? $errorBlokJumlah : ""; ?></div>
                             <div id="contentWrap">
-                                <!-- <div class="input-group" style="margin-bottom: 10px;" id="field-1">
-                                    <input type="text" name="blok[]" class="form-control" id="blok" placeholder="Blok Rumah">
-                                    <input type="number" name="jumlah[]" min="0" class="form-control" id="jumlah" placeholder="Jumlah Rumah">
-                                    <span style="background-color: #dc3545;" class="input-group-addon btn btn-outline-danger remove" id="btnRemove"><i class="fa fa-times"></i></span>
-                                </div> -->
-                                
                             </div>
                         </div>
                     </div>    
@@ -165,13 +171,14 @@
             inputGroup.append(spanRemove);
 
             $("#contentWrap").append(inputGroup);
+
+            $("#errorBlokJumlah").html("");
         });
 
         $("#contentWrap").on("click","span.remove",function(event) {
             event.preventDefault();
             $(this).parent().remove();
-        })
-
+        });
 
     });
 

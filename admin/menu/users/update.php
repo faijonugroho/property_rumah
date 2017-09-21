@@ -10,7 +10,7 @@
       <a href="/property/admin/">Dashboard</a>
     </li>
     <li class="breadcrumb-item">
-      <a href="?menu=users">Users</a>
+      <a href="<?php echo $backRedirect; ?>">Users</a>
     </li>
     <li class="breadcrumb-item active">Update Data</li>
 </ol>
@@ -73,7 +73,7 @@
                 if($update){
                     // echo $update."<br>";
                     echo "<script> alert('Data berhasil di simpan'); </script>";
-                    echo "<script> document.location.href = '?menu=users' </script>";
+                    echo "<script> document.location.href = '".$backRedirect."' </script>";
                 }
             } else {
                 $errorFormData = "<span class='text-danger'>Nama atau role tidak boleh kosong..!</span>";
