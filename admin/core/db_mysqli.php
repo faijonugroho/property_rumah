@@ -117,7 +117,8 @@ class Model_mysqli extends Database
 
 		$result = $this->db->query($sql);
 
-		return $result->fetch_all(MYSQLI_ASSOC);	}
+		return $result->fetch_all(MYSQLI_ASSOC);	
+	}
 
 	public function getCount($where=false,$search=false,$join=false)
 	{
