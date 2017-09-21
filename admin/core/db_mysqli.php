@@ -1,7 +1,12 @@
 <?php 
 /**
-* 
+* @package	  : OOP PHP
+* @subpackage : Model db MySqli Object-Oriented
+* @author 	  : Musafi'i (musafii.fai@outlook.com)
+* @copyright  : 2017
+* Default parent Model Class
 */
+
 require_once 'config_database.php';
 
 class Model_mysqli extends Database
@@ -32,7 +37,7 @@ class Model_mysqli extends Database
 	* @param $search  = array("name" => $search,"age",$search);
 	* @param $join 	  = array(
 	*							array("table[2]","table[2].id = table[1].table[2]_id",["INNER"]),
-	*							array("table[3]","table[3].id = table[2].table[3]_id",["INNER"]),
+	*							array("table[3]","table[3].id = table[2].table[3]_id",["LEFT"]),
 	*						);
 	* @param $limit   = 10;
 	* @param $offset  = 25;
@@ -114,13 +119,6 @@ class Model_mysqli extends Database
 		return $result->fetch_all(MYSQLI_ASSOC);
 	}
 
-	public function findDataPaging($page,$limit=10,$select=false,$where=false,$orderBy=false,$search=false,$join=false)
-	{
-		$offset = ($page - 1) * $limit;
-		$result = self::findData($select,$where,$orderBy,$search,$join,$limit,$offset);
-		return $result;
-	}
-
 	public function getCount($where=false,$search=false,$join=false)
 	{
 		$sql = "SELECT * FROM ".$this->table;
@@ -168,6 +166,13 @@ class Model_mysqli extends Database
 		}
 		$result = $this->db->query($sql);
 		return $result->num_rows;
+	}
+
+	public function findDataPaging($page,$limit=10,$select=false,$where=false,$orderBy=false,$search=false,$join=false)
+	{
+		$offset = ($page - 1) * $limit;
+		$result = self::findData($select,$where,$orderBy,$search,$join,$limit,$offset);
+		return $result;
 	}
 
 	public function getCountPaging($limit=10,$where=false,$search=false,$join=false)
