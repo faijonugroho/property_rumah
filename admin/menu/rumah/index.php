@@ -9,6 +9,10 @@
 <?php 
 	$model = new Model_mysqli();
 	$model->setTable("rumah");
+	$modelBlok = new Model_mysqli();
+	$modelBlok->setTable("rumah_blok");
+	$modelPenjualan = new Model_mysqli();
+	$modelPenjualan->setTable("penjualan");
 
 	$page = isset($_GET["page"]) ? $_GET["page"] : 1;
 	$select = array("rumah.*","rumah_kategori.type");
@@ -30,12 +34,17 @@
 
 	/* for delete */
 	if (isset($_GET["delete"])) {
-		$idDelete = $_GET["delete"];
-		$hapus = $model->delete($idDelete);
-		if ($hapus) {
+		if ($admin == null) {
 			echo "<script> document.location.href = '".$backRedirect."'; </script>";
+		} else {
+			$idDelete = $_GET["delete"];
+			$hapus = $model->delete($idDelete);
+			if ($hapus) {
+				echo "<script> document.location.href = '".$backRedirect."'; </script>";
+			}
 		}
 	}
+	
 ?>
 
 <div class="card border-info ">
@@ -86,45 +95,53 @@
 					$no = ($page - 1) * 10;
 					foreach($result as $item) : 
 						$no++;
-						$blokResult = explode("-||-", $item["blok"]);
-						$jumlahResult = explode("-||-", $item["jumlah"]);
+						$resultBlok = $modelBlok->findData(false,array("rumah_id" => $item["id"]));
 						$totalRumah = null;
-						foreach ($jumlahResult as $val) {	
-							$totalRumah += intval($val);
+						foreach ($resultBlok as $val) {
+							$totalRumah += intval($val["jumlah"]);
 						}
+						$countBlok = count($resultBlok);
 				?>
 
 						<?php 
-							for ($i=0; $i < count($blokResult); $i++) { 
+							foreach ($resultBlok as $val) {
 						 ?>
 						<tr>
 							<?php if($lastId !== $item["id"]) { ?>
-								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $no; ?></td>
-								<td rowspan="<?php echo count($blokResult); ?>">
+								<td rowspan="<?php echo $countBlok; ?>"><?php echo $no; ?></td>
+								<td rowspan="<?php echo $countBlok; ?>">
 									<?php $img = $item["photo"] == "" ? "img/omah_omahan.png" : "upload/rumah/".$item["photo"]; ?>
 									<img src="<?php echo $img; ?>" class="img-responsive img-thumbnail" style="width:50px; height:55px;">		
 								</td>
-								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $item["nama"]; ?></td>
-								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $item["type"]; ?></td>
-								<td rowspan="<?php echo count($blokResult); ?>">
+								<td rowspan="<?php echo $countBlok; ?>"><?php echo $item["nama"]; ?></td>
+								<td rowspan="<?php echo $countBlok; ?>"><?php echo $item["type"]; ?></td>
+								<td rowspan="<?php echo $countBlok; ?>">
 									<?php echo "Rp.".number_format($item["harga"],0,",","."); ?>
 								</td>
-								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $item["lokasi"]; ?></td>
+								<td rowspan="<?php echo $countBlok; ?>"><?php echo $item["lokasi"]; ?></td>
 							<?php 
 								} else { }
+								$blokPenjualan = array(
+													"rumah_id" => $item["id"],
+													"blok_rumah" => $val["blok"],
+												);
+								$countPenjualanBlok = $modelPenjualan->getCount($blokPenjualan);
 							?>
-								<td><?php echo $blokResult[$i]; ?></td>
-								<td><?php echo $jumlahResult[$i]; ?></td>
+								<td><?php echo $val["blok"]; ?></td>
+								<td><?php echo $countPenjualanBlok." / ".$val["jumlah"]; ?></td>
 
-							<?php if($lastId !== $item["id"]) { ?>
-								<td rowspan="<?php echo count($blokResult); ?>"><?php echo $totalRumah; ?></td>
+							<?php 
+								if($lastId !== $item["id"]) { 
+									$countPenjualan = $modelPenjualan->getCount(array("rumah_id" => $item["id"]));
+							?>
+								<td style="width: 60px;" rowspan="<?php echo $countBlok; ?>"><?php echo $countPenjualan." / ".$totalRumah; ?></td>
 							<?php 
 								} else { }
 							?>
 
 							<?php if($lastId !== $item["id"]) { ?>
 								<?php if($admin["role"] == "super_admin") : ?>
-								<td rowspan="<?php echo count($blokResult); ?>" style="width: 18%;">
+								<td rowspan="<?php echo $countBlok; ?>" style="width: 18%;">
 									<a href="?menu=rumah/update/<?php echo $item["id"].$redirect; ?>" class="btn btn-outline-warning btn-sm"><i class="fa fa-edit"></i> Edit</a> &nbsp; &nbsp;
 									<a href="?menu=rumah&delete=<?php echo $item["id"].$redirect; ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah anda yakin ingin menghapus data ini.?')"><i class="fa fa-trash-o"></i> Hapus</a>
 								</td>
@@ -135,7 +152,7 @@
 							?>
 						</tr>
 						<?php
-							} // end for 
+							} // end foreach
 						?>
 				<?php 
 					endforeach; 

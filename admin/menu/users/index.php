@@ -25,14 +25,18 @@
 
 	/* for delete */
 	if (isset($_GET["delete"])) {
-		$idDelete = $_GET["delete"];
-		$getById = $model->getById($idDelete);
-		$hapus = $model->delete($idDelete);
-		if ($hapus) {
-			if (file_exists("upload/users/".$getById['photo']) && $getById['photo']) {
-				unlink("upload/users/".$getById['photo']);
-			}
+		if ($admin == null) {
 			echo "<script> document.location.href = '".$backRedirect."'; </script>";
+		} else {
+			$idDelete = $_GET["delete"];
+			$getById = $model->getById($idDelete);
+			$hapus = $model->delete($idDelete);
+			if ($hapus) {
+				if (file_exists("upload/users/".$getById['photo']) && $getById['photo']) {
+					unlink("upload/users/".$getById['photo']);
+				}
+				echo "<script> document.location.href = '".$backRedirect."'; </script>";
+			}
 		}
 	}
 ?>

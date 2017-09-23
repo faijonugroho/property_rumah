@@ -62,6 +62,14 @@
             </a>
           </li>
 
+          <li class="nav-item <?php echo $uri == 'penjualan' ? 'active' : ''; ?>" data-toggle="tooltip" data-placement="right" title="Pemesanan">
+            <a class="nav-link" href="?menu=penjualan">
+              <i class="fa fa-credit-card"></i>&nbsp;
+              <span class="nav-link-text">
+                Transaksi Penjualan</span>
+            </a>
+          </li>
+
           <li class="nav-item <?php echo $uri == 'pembeli' ? 'active' : ''; ?>" data-toggle="tooltip" data-placement="right" title="Data Pembeli">
             <a class="nav-link" href="?menu=pembeli">
               <i class="fa fa-user"></i>&nbsp;&nbsp;

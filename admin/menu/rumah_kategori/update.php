@@ -10,7 +10,7 @@
       <a href="/property/admin/">Dashboard</a>
     </li>
     <li class="breadcrumb-item">
-      <a href="?menu=rumah_kategori">Rumah Kategori</a>
+      <a href="<?php echo $backRedirect; ?>">Rumah Kategori</a>
     </li>
     <li class="breadcrumb-item active">Update Data</li>
 </ol>
@@ -36,7 +36,7 @@
                 $Update = $model->update($id,$data);
                 if($Update){
                     echo "<script> alert('Data berhasil di simpan'); </script>";
-                    echo "<script> document.location.href = '?menu=rumah_kategori' </script>";
+                    echo "<script> document.location.href = '".$backRedirect."' </script>";
                 }            } else {
             $errorFormData = Helper::spanDanger("Type, luas, atau description tidak boleh kosong..!");
             $errorFormData .=  "<br><br>";
@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <input type="text" name="id" value="<?php echo $getById["id"]; ?>">
+                        <input type="hidden" name="id" value="<?php echo $getById["id"]; ?>">
                         <div class="form-row">
                             <div class="col-md-2">
                                 <label>Type</label>
@@ -92,7 +92,7 @@
             <hr>
             <button type="submit" name="btnSimpan" class="btn btn-success btn-lg"><i class="fa fa-save"></i> Simpan</button>
             &nbsp;&nbsp;&nbsp;
-            <a href="?menu=rumah_kategori" class="btn btn-warning btn-lg"><i class="fa fa-ban"></i> Batal</a>
+            <a href="<?php echo $backRedirect; ?>" class="btn btn-warning btn-lg"><i class="fa fa-ban"></i> Batal</a>
         </form>
     </div>
 </div>

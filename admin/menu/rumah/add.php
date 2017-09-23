@@ -18,6 +18,8 @@
 <?php 
     $model = new Model_mysqli();
     $model->setTable("rumah");
+    $modelBlok = new Model_mysqli();
+    $modelBlok->setTable("rumah_blok");
 
 
     if (isset($_POST["btnSimpan"])) {
@@ -37,16 +39,16 @@
                 $blok = $_POST["blok"];
                 $jumlah = $_POST["jumlah"];
 
-                $blok = implode("-||-", $blok);
-                $jumlah = implode("-||-", $jumlah);
+                /*$blok = implode("-||-", $blok);
+                $jumlah = implode("-||-", $jumlah);*/
 
                 $data = array(
                             "nama"          =>  trim($nama),
                             "kategori_id"   =>  $kategori,
                             "harga"         =>  $harga,
                             "lokasi"        =>  $lokasi,
-                            "blok"          =>  $blok,
-                            "jumlah"        =>  $jumlah
+                            /*"blok"          =>  $blok,
+                            "jumlah"        =>  $jumlah*/
                         );
 
                 $file_name = explode(".",$file_photo["name"]);
@@ -72,8 +74,17 @@
 
                 if(!isset($errorPhoto)) {
                     if (!empty(trim($nama)) && !empty(trim($lokasi))) {   
-                        $insert = $model->insert($data);
-                        if($insert){
+                        $insertRumah = $model->insert($data);
+                        if($insertRumah){
+
+                            for ($i=0; $i < count($blok); $i++) { 
+                                $dataBlok = array(
+                                                "rumah_id"  =>  $insertRumah,
+                                                "blok"  =>  $blok[$i],
+                                                "jumlah"    =>  $jumlah[$i],
+                                            );
+                                $modelBlok->insert($dataBlok);
+                            }
                             echo "<script> alert('Tambah data berhasil di prosess.'); </script>";
                             echo "<script> document.location.href = '?menu=rumah' </script>";
                         }
@@ -158,7 +169,7 @@
         $("#btnAddBlokJumlah").click(function() {
             no++;
             inputGroup = $('<div class="input-group" style="margin-bottom: 10px;" id="field-'+no+'">');
-            blok = $(' <input type="text" name="blok[]" class="form-control" id="blok" placeholder="Blok Rumah" reuired>');
+            blok = $(' <input type="text" name="blok[]" class="form-control" id="blok" placeholder="Blok Rumah" required>');
             jumlah = $('<input type="number" name="jumlah[]" min="0" class="form-control" id="jumlah" placeholder="Jumlah Rumah"> required');
             spanRemove = $('<span style="background-color: #dc3545;" class="input-group-addon btn btn-outline-danger remove" id="btnRemove"><i class="fa fa-times"></i></span>');
 

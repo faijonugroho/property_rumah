@@ -18,6 +18,8 @@
 <?php 
     $model = new Model_mysqli();
     $model->setTable("rumah");
+    $modelBlok = new Model_mysqli();
+    $modelBlok->setTable("rumah_blok");
 
 
     $action = explode("/", $_GET["menu"]); // check url palng akhir
@@ -41,16 +43,16 @@
             $blok = $_POST["blok"];
             $jumlah = $_POST["jumlah"];
 
-            $blok = implode("-||-", $blok);
-            $jumlah = implode("-||-", $jumlah);
+            /*$blok = implode("-||-", $blok);
+            $jumlah = implode("-||-", $jumlah);*/
 
             $data = array(
                         "nama"          =>  trim($nama),
                         "kategori_id"   =>  $kategori,
                         "harga"         =>  $harga,
                         "lokasi"        =>  $lokasi,
-                        "blok"          =>  $blok,
-                        "jumlah"        =>  $jumlah
+                        /*"blok"          =>  $blok,
+                        "jumlah"        =>  $jumlah*/
                     );
 
             $file_name = explode(".",$file_photo["name"]);
@@ -82,6 +84,15 @@
                 if (!empty(trim($nama)) && !empty(trim($lokasi))) {   
                     $update = $model->update($id,$data);
                     if($update){
+                        $modelBlok->deleteWhere(array("rumah_id" => $id));
+                        for ($i=0; $i < count($blok); $i++) { 
+                            $dataBlok = array(
+                                            "rumah_id"  =>  $id,
+                                            "blok"  =>  $blok[$i],
+                                            "jumlah"    =>  $jumlah[$i],
+                                        );
+                            $modelBlok->insert($dataBlok);
+                        }
                         echo "<script> alert('Update data berhasil di prosess.'); </script>";
                         echo "<script> document.location.href = '".$backRedirect."' </script>";
                     }
@@ -161,14 +172,12 @@
                             <div id="errorBlokJumlah"><?php echo isset($errorBlokJumlah) ? $errorBlokJumlah : ""; ?></div>
                             <div id="contentWrap">
                                 <?php 
-                                    $blokRumah = explode("-||-", $getById["blok"]);
-                                    $jumlahRumah = explode("-||-", $getById["jumlah"]);
-
-                                    for ($i=0; $i < count($blokRumah); $i++) { 
+                                    $resultBlok = $modelBlok->findData(false,array("rumah_id" => $getById["id"]));
+                                    foreach ($resultBlok as $val) {
                                  ?>
                                 <div class="input-group" style="margin-bottom: 10px;" id="field-1">
-                                    <input type="text" name="blok[]" value="<?php echo $blokRumah[$i]; ?>" class="form-control" id="blok" placeholder="Blok Rumah">
-                                    <input type="number" name="jumlah[]" value="<?php echo $jumlahRumah[$i]; ?>" min="0" class="form-control" id="jumlah" placeholder="Jumlah Rumah">
+                                    <input type="text" name="blok[]" value="<?php echo $val["blok"]; ?>" class="form-control" id="blok" placeholder="Blok Rumah">
+                                    <input type="number" name="jumlah[]" value="<?php echo $val["jumlah"]; ?>" min="0" class="form-control" id="jumlah" placeholder="Jumlah Rumah">
                                     <span style="background-color: #dc3545;" class="input-group-addon btn btn-outline-danger remove" id="btnRemove"><i class="fa fa-times"></i></span>
                                 </div>
                                 <?php } ?>
@@ -194,7 +203,7 @@
         $("#btnAddBlokJumlah").click(function() {
             no++;
             inputGroup = $('<div class="input-group" style="margin-bottom: 10px;" id="field-'+no+'">');
-            blok = $(' <input type="text" name="blok[]" class="form-control" id="blok" placeholder="Blok Rumah" reuired>');
+            blok = $(' <input type="text" name="blok[]" class="form-control" id="blok" placeholder="Blok Rumah" required>');
             jumlah = $('<input type="number" name="jumlah[]" min="0" class="form-control" id="jumlah" placeholder="Jumlah Rumah"> required');
             spanRemove = $('<span style="background-color: #dc3545;" class="input-group-addon btn btn-outline-danger remove" id="btnRemove"><i class="fa fa-times"></i></span>');
 

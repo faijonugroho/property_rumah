@@ -14,10 +14,17 @@ class Model_mysqli extends Database
 	private $db;
 	private $table;
 	private $primary_id = "id";
+	public $response;
 
 	function __construct()
 	{
 		$this->db = parent::mySqli();
+
+		$this->response = new StdClass();
+		$this->response->status = false;
+		$this->response->message = "";
+		$this->response->data = new StdClass();
+		$this->response->error = new StdClass();
 	}
 
 	public function setTable($tablName)
@@ -168,7 +175,7 @@ class Model_mysqli extends Database
 		$result = $this->db->query($sql);
 		return $result->num_rows;
 	}
-
+	
 	public function findDataPaging($page,$limit=10,$select=false,$where=false,$orderBy=false,$search=false,$join=false)
 	{
 		$offset = ($page - 1) * $limit;
@@ -285,6 +292,43 @@ class Model_mysqli extends Database
 		$stmt = $this->db->prepare($sql);
 		$delete = $stmt->execute();
 		return $delete;
+	}
+
+	public function deleteWhere($where,$table=false)
+	{
+		$table = $table ? $table : $this->table;
+		$sql= "DELETE FROM ".$table." WHERE ";
+		$field = null;
+		foreach ($where as $key => $value) {
+			$key = explode(" ", $key);
+			$key = count($key) > 1 ?  $key[0]." ".($key[1] == "" ? "= " : $key[1]) : $key[0]." = ";
+			$value = self::escape_quote($value);
+			$field .= " AND ".$key." '".$value."'";
+		}
+		$sql .= substr($field,4);
+		$stmt = $this->db->prepare($sql);
+		$delete = $stmt->execute();
+		return $delete;
+	}
+
+	public function isPost()
+	{
+		$method = $_SERVER["REQUEST_METHOD"];
+		if (strtoupper($method) == "POST") {
+			return true;
+		} else {
+			// echo "REQUEST_METHOD Not Allow";
+			$this->response->message = "Not allow get request";
+			self::json();
+			return false;
+		}
+	}
+
+	public function json($data = null)
+	{
+		header("Content-Type: application/json; charset=utf-8");
+		$data = isset($data) ? $data : $this->response;
+		echo json_encode($data);
 	}
 
 }
