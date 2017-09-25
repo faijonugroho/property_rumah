@@ -8,7 +8,8 @@
 				<ul>
 					<li><a href="index.php">Home</a></li>
 					<li><a href="agent.php">Agent</a></li>
-					<li class="fh5co-active"><a href="about.php">Tentang Kami</a></li>
+					<li><a href="pembeli.php">Pembeli</a></li>
+					<li class="fh5co-active"><a href="about.php">Tentang</a></li>
 					<li><a href="contact.php">Kontak</a></li>
 				</ul>
 			</nav>
@@ -21,7 +22,7 @@
 
 		<div id="fh5co-main">
 		    <div class="fh5co-narrow-content fh5co-border-bottom">
-		      <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Tentang Kami</h2>
+		      <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">Tentang</h2>
 		      <hr>
 		      <?php 
 		      		require_once 'core/db_mysqli.php';

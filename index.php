@@ -8,7 +8,8 @@
 				<ul>
 					<li class="fh5co-active"><a href="index.php">Home</a></li>
 					<li><a href="agent.php">Agent</a></li>
-					<li><a href="about.php">Tentang Kami</a></li>
+					<li><a href="pembeli.php">Pembeli</a></li>
+					<li><a href="about.php">Tentang</a></li>
 					<li><a href="contact.php">Kontak</a></li>
 				</ul>
 			</nav>
@@ -82,7 +83,7 @@
 								$searchPage = isset($_GET["search"]) ? $pageRedirect : "?page=".$page;
 
 								$select = array("rumah.*","type");
-								
+								$orderBy = array("id" => "DESC");
 								$searchRumah = array(
 														"nama" 	=> 	$search,
 														"type"	=>	$type,
@@ -91,9 +92,9 @@
 								$join = array(
 												array("rumah_kategori","rumah_kategori.id = rumah.kategori_id"),
 											);
-								$resultProdukRumah = $modelRumah->findDataPaging($page,6,$select,false,false,$searchRumah,$join);
+								$resultProdukRumah = $modelRumah->findDataPaging($page,6,$select,false,$orderBy,$searchRumah,$join);
 								$totalPageRumah = $modelRumah->getCountPaging(6,false,$searchRumah,$join);
-								shuffle($resultProdukRumah);
+								// shuffle($resultProdukRumah);
 						?>
 						<?php foreach ($resultProdukRumah AS $val) { ?>
 							<div class="col-md-4 col-sm-6 col-xs-6 col-xxs-12 work-item">
@@ -121,31 +122,13 @@
 						<?php endif; ?>
 					</div>
 
+					<div class="animate-box" data-animate-effect="fadeInLeft">
 					<!-- Paging Product Rumah -->
 					<?php 
 						$pageSearch = isset($_GET["search"]) ? "&search=".$search."&type=".$type."&harga=".$harga : "";
 						Helper::pagination($resultProdukRumah,$totalPageRumah,$page,$pageSearch,"Right");
 					 ?>
-					<!--  <br><br>
-					<nav>
-					  <ul class="pagination pagination-lg">
-					    <li>
-					      <a href="#" aria-label="Previous">
-					        <span aria-hidden="true">&laquo;</span>
-					      </a>
-					    </li>
-					    <li><a href="#">1</a></li>
-					    <li class="active"><a href="index.php?page=2<?php echo $pageSearch; ?>">2</a></li>
-					    <li><a href="#">3</a></li>
-					    <li><a href="#">4</a></li>
-					    <li><a href="#">5</a></li>
-					    <li>
-					      <a href="#" aria-label="Next">
-					        <span aria-hidden="true">&raquo;</span>
-					      </a>
-					    </li>
-					  </ul>
-					</nav> -->
+					</div>
 			</div>
 		</div>
 	</div>

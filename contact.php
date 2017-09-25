@@ -8,7 +8,8 @@
 				<ul>
 					<li><a href="index.php">Home</a></li>
 					<li><a href="agent.php">Agent</a></li>
-					<li><a href="about.php">Tentang Kami</a></li>
+					<li><a href="pembeli.php">Pembeli</a></li>
+					<li><a href="about.php">Tentang</a></li>
 					<li class="fh5co-active"><a href="contact.php">Kontak</a></li>
 				</ul>
 			</nav>

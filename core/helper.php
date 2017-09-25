@@ -30,7 +30,7 @@ class Helper
 				    	endfor;
 					$pageNextDisabled = $page == $total_pages ? 'disabled' : '';
 				    echo '<li class="page-item '.$pageNextDisabled.'">';
-				      echo '<a class="page-link" href="=?page='.$pageNext.$search.'">Next</a>';
+				      echo '<a class="page-link" href="?page='.$pageNext.$search.'">Next</a>';
 				    echo '</li>';
 				echo '</ul>';
 			echo '</nav>';

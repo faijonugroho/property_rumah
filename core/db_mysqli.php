@@ -43,7 +43,7 @@ class Model_mysqli extends Database
 	* @param $offset  = 25;
 	* @param $orderBy =	"name, age" OR array("name","age");
 	*/
-	public function findData($select=false,$where=false,$orderBy=false,$search=false,$join=false,$limit=false,$offset=false,$groupBy=false)
+	public function findData($select=false,$where=false,$orderBy=false,$search=false,$join=false,$limit=false,$offset=false,$groupBy=false,$searchOR=false)
 	{
 		if ($select) {
 			$select = is_array($select) ? implode(", ", $select) : $select;
@@ -96,6 +96,25 @@ class Model_mysqli extends Database
 			}
 		}
 
+		if ($searchOR) {
+			$field = null;
+			if ($where) {
+				$sql .= " AND ( ";
+				foreach ($searchOR as $key => $value) {
+					$value = self::escape_quote($value);
+					$field .= "OR ".$key." LIKE '%".$value."%' ";
+				}
+				$sql .= substr($field, 3)." ) ";
+			} else {
+				$sql .= " WHERE ";
+				foreach ($searchOR as $key => $value) {
+					$value = self::escape_quote($value);
+					$field .= "OR ".$key." LIKE '%".$value."%' ";
+				}
+				$sql .= substr($field, 3);
+			}
+		}
+
 		if ($groupBy) {
 			$sql .= " GROUP BY ";
 			$field = null;
@@ -133,7 +152,7 @@ class Model_mysqli extends Database
 		return $result->fetch_all(MYSQLI_ASSOC);	
 	}
 
-	public function getCount($where=false,$search=false,$join=false)
+	public function getCount($where=false,$search=false,$join=false,$searchOR=false)
 	{
 		$sql = "SELECT * FROM ".$this->table." ";
 
@@ -179,20 +198,40 @@ class Model_mysqli extends Database
 				$sql .= substr($field, 4);
 			}
 		}
+
+		if ($searchOR) {
+			$field = null;
+			if ($where) {
+				$sql .= " AND ( ";
+				foreach ($searchOR as $key => $value) {
+					$value = self::escape_quote($value);
+					$field .= "OR ".$key." LIKE '%".$value."%' ";
+				}
+				$sql .= substr($field, 3)." ) ";
+			} else {
+				$sql .= " WHERE ";
+				foreach ($searchOR as $key => $value) {
+					$value = self::escape_quote($value);
+					$field .= "OR ".$key." LIKE '%".$value."%' ";
+				}
+				$sql .= substr($field, 3);
+			}
+		}
+
 		$result = $this->db->query($sql);
 		return $result->num_rows;
 	}
 	
-	public function findDataPaging($page,$limit=10,$select=false,$where=false,$orderBy=false,$search=false,$join=false)
+	public function findDataPaging($page,$limit=10,$select=false,$where=false,$orderBy=false,$search=false,$join=false,$searchOR=false)
 	{
 		$offset = ($page - 1) * $limit;
-		$result = self::findData($select,$where,$orderBy,$search,$join,$limit,$offset);
+		$result = self::findData($select,$where,$orderBy,$search,$join,$limit,$offset,false,$searchOR);
 		return $result;
 	}
 
-	public function getCountPaging($limit=10,$where=false,$search=false,$join=false)
+	public function getCountPaging($limit=10,$where=false,$search=false,$join=false,$searchOR=false)
 	{
-		$result = self::getCount($where,$search,$join);
+		$result = self::getCount($where,$search,$join,$searchOR);
 		$result = ceil($result / $limit);
 		return $result;
 	}
