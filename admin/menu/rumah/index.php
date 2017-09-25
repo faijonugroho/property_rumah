@@ -100,7 +100,7 @@
 						foreach ($resultBlok as $val) {
 							$totalRumah += intval($val["jumlah"]);
 						}
-						$countBlok = count($resultBlok);
+						$countBlok = count($resultBlok);	// for rowspan
 				?>
 
 						<?php 

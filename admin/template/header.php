@@ -99,6 +99,28 @@
                 </li>
               </ul>
           </li>
+      
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">
+            <a class="nav-link nav-link-collapse <?php if($uri == 'about' || $uri == 'contact') { echo '';} else { echo 'collapsed'; } ?>" data-toggle="collapse" href="#settings" data-parent="#settings">
+              <i class="fa fa-gears"></i>&nbsp;
+              <span class="nav-link-text">
+                Settings</span>
+            </a>
+              <ul class="sidenav-second-level collapse <?php if($uri == 'about' || $uri == 'contact') { echo 'show';} ?> " id="settings">
+                <li class="nav-item <?php echo $uri == 'about' ? 'active' : ''; ?>">
+                  <a href="?menu=about">
+                    <i class="fa fa-dot-circle-o"></i>
+                    Tentang Kami
+                  </a>
+                </li>
+                <li class="nav-item <?php echo $uri == 'contact' ? 'active' : ''; ?>">
+                  <a href="?menu=contact">
+                    <i class="fa fa-dot-circle-o"></i>
+                    Kontak
+                  </a>
+                </li>
+              </ul>
+          </li>
 		  
           <li class="nav-item <?php echo $uri == 'users' ? 'active' : ''; ?>" data-toggle="tooltip" data-placement="right" title="Users">
             <a class="nav-link" href="?menu=users">

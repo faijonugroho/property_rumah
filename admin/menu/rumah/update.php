@@ -43,16 +43,11 @@
             $blok = $_POST["blok"];
             $jumlah = $_POST["jumlah"];
 
-            /*$blok = implode("-||-", $blok);
-            $jumlah = implode("-||-", $jumlah);*/
-
             $data = array(
                         "nama"          =>  trim($nama),
                         "kategori_id"   =>  $kategori,
                         "harga"         =>  $harga,
                         "lokasi"        =>  $lokasi,
-                        /*"blok"          =>  $blok,
-                        "jumlah"        =>  $jumlah*/
                     );
 
             $file_name = explode(".",$file_photo["name"]);

@@ -33,11 +33,12 @@
                 );
 
         if (!empty(trim($type)) && !empty(trim($luas)) && !empty(trim($description)) ) { 
-                $Update = $model->update($id,$data);
-                if($Update){
-                    echo "<script> alert('Data berhasil di simpan'); </script>";
-                    echo "<script> document.location.href = '".$backRedirect."' </script>";
-                }            } else {
+            $Update = $model->update($id,$data);
+            if($Update){
+                echo "<script> alert('Data berhasil di simpan'); </script>";
+                echo "<script> document.location.href = '".$backRedirect."' </script>";
+            }           
+        } else {
             $errorFormData = Helper::spanDanger("Type, luas, atau description tidak boleh kosong..!");
             $errorFormData .=  "<br><br>";
         }

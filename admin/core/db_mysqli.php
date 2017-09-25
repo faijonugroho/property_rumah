@@ -48,8 +48,9 @@ class Model_mysqli extends Database
 	*						);
 	* @param $limit   = 10;
 	* @param $offset  = 25;
+	* @param $orderBy =	"name, age" OR array("name","age");
 	*/
-	public function findData($select=false,$where=false,$orderBy=false,$search=false,$join=false,$limit=false,$offset=false)
+	public function findData($select=false,$where=false,$orderBy=false,$search=false,$join=false,$limit=false,$offset=false,$groupBy=false)
 	{
 		if ($select) {
 			$select = is_array($select) ? implode(", ", $select) : $select;
@@ -99,6 +100,19 @@ class Model_mysqli extends Database
 					$field .= "OR ".$key." LIKE '%".$value."%' ";
 				}
 				$sql .= substr($field, 3);
+			}
+		}
+
+		if ($groupBy) {
+			$sql .= " GROUP BY ";
+			$field = null;
+			if (is_array($groupBy)) {
+				foreach ($groupBy as $value) {
+					$field .= ", ".$value;
+				}
+				$sql .= substr($field, 2);
+			} else {
+				$sql .= $groupBy;
 			}
 		}
 

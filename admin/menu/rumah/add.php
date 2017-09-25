@@ -39,16 +39,11 @@
                 $blok = $_POST["blok"];
                 $jumlah = $_POST["jumlah"];
 
-                /*$blok = implode("-||-", $blok);
-                $jumlah = implode("-||-", $jumlah);*/
-
                 $data = array(
                             "nama"          =>  trim($nama),
                             "kategori_id"   =>  $kategori,
                             "harga"         =>  $harga,
                             "lokasi"        =>  $lokasi,
-                            /*"blok"          =>  $blok,
-                            "jumlah"        =>  $jumlah*/
                         );
 
                 $file_name = explode(".",$file_photo["name"]);
@@ -76,7 +71,6 @@
                     if (!empty(trim($nama)) && !empty(trim($lokasi))) {   
                         $insertRumah = $model->insert($data);
                         if($insertRumah){
-
                             for ($i=0; $i < count($blok); $i++) { 
                                 $dataBlok = array(
                                                 "rumah_id"  =>  $insertRumah,
