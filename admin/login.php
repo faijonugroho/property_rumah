@@ -28,7 +28,7 @@
     <?php 
         session_start();
         if (isset($_SESSION["user_admin"])) {
-          echo "<script> window.location.href = '/property/admin/'; </script>";
+          echo "<script> window.location.href = '/admin/'; </script>";
         }
 
         require_once '/core/db_mysqli.php';
@@ -65,7 +65,7 @@
                   } else {
                       // var_dump($result);
                       $_SESSION["user_admin"] = $result;
-                      echo "<script> window.location.href = '/property/admin/'; </script>";
+                      echo "<script> window.location.href = '/admin/'; </script>";
                   }
                   echo "<br><br>";
               }

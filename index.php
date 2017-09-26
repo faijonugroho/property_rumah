@@ -102,7 +102,7 @@
 									<center>
 									<a href="detail.php<?php echo $searchPage."&detail=".$val["id"]; ?>">
 										<?php 
-											$srcImg = $val["photo"] == "" ? "/property/admin/img/omah_omahan.png" : "/property/admin/upload/rumah/".$val['photo'];
+											$srcImg = $val["photo"] == "" ? "/admin/img/omah_omahan.png" : "/admin/upload/rumah/".$val['photo'];
 										?>
 										<img src="<?php echo $srcImg; ?>" alt="<?php echo $val["nama"]; ?>" style="width:250px; height:220px;" class="img-responsive">
 										<h3 class="fh5co-work-title"><?php echo $val["nama"]; ?></h3>

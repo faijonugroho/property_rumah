@@ -37,7 +37,7 @@
               if (isset($_GET["user_admin"])) {
                 session_unset($_SESSION["user_admin"]);
                 session_destroy();
-                echo "<script> window.location.href = '/property/admin/login.php'; </script>";
+                echo "<script> window.location.href = '/admin/login.php'; </script>";
               }
             ?>
           </div>

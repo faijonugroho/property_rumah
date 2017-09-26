@@ -1,8 +1,8 @@
 <?php 
     session_start();
     if (!isset($_SESSION["user_admin"])) {
-        echo "<script> window.location.href = '/property/admin/login.php'; </script>";
-        // header("Location: /property/admin/login.php");
+        echo "<script> window.location.href = '/admin/login.php'; </script>";
+        // header("Location: /admin/login.php");
     }
 
     if (isset($_SESSION["user_admin"])) {
@@ -24,7 +24,7 @@
         $getAjax = explode("/", $getAjax);
 
         if($getAjax[0] == ""){
-            echo "<script> document.location.href = '/property/admin'; </script>";
+            echo "<script> document.location.href = '/admin'; </script>";
         } else if (!isset($getAjax[1])) {
             $getAjax = $getAjax[0]."/index";
         } else if ($getAjax[1] == "") {
@@ -63,7 +63,7 @@
             $backRedirect = "?menu=".$getMenu[0].$pageRedirect.$searchRedirect; // mengembalikan isi get redirect;
 
             if($getMenu[0] == ""){
-                echo "<script> document.location.href = '/property/admin'; </script>";
+                echo "<script> document.location.href = '/admin'; </script>";
             } else if (!isset($getMenu[1])) {
                 $getMenu = $getMenu[0]."/index";
             } else if ($getMenu[1] == "") {
@@ -88,7 +88,7 @@
             <!-- Breadcrumbs -->
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="/property">Home</a>
+                <a href="/">Home</a>
               </li>
               <li class="breadcrumb-item active">My Home</li>
             </ol>
