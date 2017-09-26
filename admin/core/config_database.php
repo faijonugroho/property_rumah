@@ -5,10 +5,10 @@
 class Database
 {	
 	private $config = array(
-				"servername"	=>	"sql300.epizy.com",
-				"username"		=>	"epiz_20750481",
-				"password"		=>	"aOTh5xrjkz",
-				"dbname"		=>	"epiz_20750481_property",
+				"servername"	=>	"localhost",
+				"username"		=>	"root",
+				"password"		=>	"",
+				"dbname"		=>	"property",
 			);
 	private $db;
 
