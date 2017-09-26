@@ -9,7 +9,7 @@
 
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin - Start Bootstrap Template</title>
+    <title>Login PropertyMedia</title>
 
     <!-- Bootstrap core CSS -->
     <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -28,10 +28,10 @@
     <?php 
         session_start();
         if (isset($_SESSION["user_admin"])) {
-          echo "<script> window.location.href = '/property/admin/'; </script>";
+          echo "<script> window.location.href = '/admin/'; </script>";
         }
 
-        require_once '/core/db_mysqli.php';
+        require_once 'core/db_mysqli.php';
         $model = new Model_mysqli();
         $model->setTable("users");
 
@@ -65,7 +65,7 @@
                   } else {
                       // var_dump($result);
                       $_SESSION["user_admin"] = $result;
-                      echo "<script> window.location.href = '/property/admin/'; </script>";
+                      echo "<script> window.location.href = '/admin/'; </script>";
                   }
                   echo "<br><br>";
               }

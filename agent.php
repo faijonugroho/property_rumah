@@ -42,7 +42,7 @@
 								<div class="thumbnail">
 									<center>
 										<?php 
-											$srcImg = $item["photo"] == "" ? "/property/admin/img/user_image.png" : "/property/admin/upload/users/".$item['photo'];
+											$srcImg = $item["photo"] == "" ? "/admin/img/user_image.png" : "/admin/upload/users/".$item['photo'];
 										?>
 										<img src="<?php echo $srcImg; ?>" alt="<?php echo $item["nama"]; ?>" style="height:150px; width:150px;" class="img-responsive">
 										<h3><?php echo $item["nama"]; ?></h3>

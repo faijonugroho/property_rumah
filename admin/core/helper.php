@@ -20,17 +20,25 @@ class Helper
 				echo '<ul class="pagination '.$position.'">';
 					$pagePrevDisabled = $page == 1 ? 'disabled' : '';
 					echo '<li class="page-item '.$pagePrevDisabled.'">';
+				      echo '<a class="page-link" href="?menu='.$menu.'&page=1'.$search.'">First</a>';
+				    echo '</li>';
+					echo '<li class="page-item '.$pagePrevDisabled.'">';
 				      echo '<a class="page-link" href="?menu='.$menu.'&page='.$pagePrev.$search.'">Previous</a>';
 				    echo '</li>';
 				    	for ($i=1; $i <= $total_pages; $i++) :
-				    		$pageActive = $page == $i ? 'active' : '';
-						    echo '<li class="page-item '.$pageActive.'">';
-						    	echo '<a class="page-link" href="?menu='.$menu.'&page='.$i.$search.'">'.$i.'</a>';
-						    echo '</li>';
+				    		if (($i >= $page - 3) && ($i <= $page + 3)) {
+					    		$pageActive = $page == $i ? 'active' : '';
+							    echo '<li class="page-item '.$pageActive.'">';
+							    	echo '<a class="page-link" href="?menu='.$menu.'&page='.$i.$search.'">'.$i.'</a>';
+							    echo '</li>';
+				    		}
 				    	endfor;
 					$pageNextDisabled = $page == $total_pages ? 'disabled' : '';
 				    echo '<li class="page-item '.$pageNextDisabled.'">';
 				      echo '<a class="page-link" href="?menu='.$menu.'&page='.$pageNext.$search.'">Next</a>';
+				    echo '</li>';
+				    echo '<li class="page-item '.$pageNextDisabled.'">';
+				      echo '<a class="page-link" href="?menu='.$menu.'&page='.$total_pages.$search.'">Last</a>';
 				    echo '</li>';
 				echo '</ul>';
 			echo '</nav>';

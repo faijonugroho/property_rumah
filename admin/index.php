@@ -1,8 +1,8 @@
 <?php 
     session_start();
     if (!isset($_SESSION["user_admin"])) {
-        echo "<script> window.location.href = '/property/admin/login.php'; </script>";
-        // header("Location: /property/admin/login.php");
+        echo "<script> window.location.href = '/admin/login.php'; </script>";
+        // header("Location: admin/login.php");
     }
 
     if (isset($_SESSION["user_admin"])) {
@@ -11,8 +11,8 @@
         $admin = null;
     }
     
-    require_once '/core/db_mysqli.php';
-    require_once '/core/helper.php';
+    require_once 'core/db_mysqli.php';
+    require_once 'core/helper.php';
 
 ?>
 
@@ -24,7 +24,7 @@
         $getAjax = explode("/", $getAjax);
 
         if($getAjax[0] == ""){
-            echo "<script> document.location.href = '/property/admin'; </script>";
+            echo "<script> document.location.href = '/admin'; </script>";
         } else if (!isset($getAjax[1])) {
             $getAjax = $getAjax[0]."/index";
         } else if ($getAjax[1] == "") {
@@ -39,13 +39,13 @@
             <p>The page you requested was not found.</p>
 <?php
         } else {
-            include_once '/ajax/'.$getAjax.".php";
+            include_once 'ajax/'.$getAjax.".php";
         }
     } else {
 ?>
 
     <!-- template header -->
-        <?php require '/template/header.php'; ?>
+        <?php require 'template/header.php'; ?>
     <!-- end template header -->
 
     
@@ -63,7 +63,7 @@
             $backRedirect = "?menu=".$getMenu[0].$pageRedirect.$searchRedirect; // mengembalikan isi get redirect;
 
             if($getMenu[0] == ""){
-                echo "<script> document.location.href = '/property/admin'; </script>";
+                echo "<script> document.location.href = '/admin'; </script>";
             } else if (!isset($getMenu[1])) {
                 $getMenu = $getMenu[0]."/index";
             } else if ($getMenu[1] == "") {
@@ -80,7 +80,7 @@
                 <p>The page you requested was not found.</p>
     <?php
             } else {
-                include_once("/menu/".$getMenu.".php");
+                include_once("menu/".$getMenu.".php");
             }
         } else {
             if (!isset($_GET["ajax"])) {
@@ -88,20 +88,20 @@
             <!-- Breadcrumbs -->
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="/property">Home</a>
+                <a href="/">Home</a>
               </li>
               <li class="breadcrumb-item active">My Home</li>
             </ol>
 
     <?php
-            include_once("/menu/home/index.php");
+            include_once("menu/home/index.php");
             }
         }   
     ?>
     <!-- end content menu -->
 
     <!-- template footer -->
-        <?php require '/template/footer.php'; ?>
+        <?php require 'template/footer.php'; ?>
     <!-- end template footer -->
 
 <?php } ?>

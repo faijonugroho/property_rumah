@@ -77,13 +77,13 @@
 					<!-- Product Rumah -->
 					<div class="row animate-box" data-animate-effect="fadeInLeft">
 						<?php
-								// $detailRedirect = isset($_GET["search"]) ? "?search=".$search."&type=".$type."&harga=".$harga : "";
 								$pageRedirect = isset($_GET["page"]) ? "?page=".$page."&search=".$search."&type=".$type."&harga=".$harga : "";
 								$page = isset($_GET["page"]) ? $page : 1;
 								$searchPage = isset($_GET["search"]) ? $pageRedirect : "?page=".$page;
 
 								$select = array("rumah.*","type");
-								$orderBy = array("id" => "DESC");
+								$orderBy = array("nama" => "ASC");
+								// $orderBy = false;
 								$searchRumah = array(
 														"nama" 	=> 	$search,
 														"type"	=>	$type,
@@ -102,7 +102,7 @@
 									<center>
 									<a href="detail.php<?php echo $searchPage."&detail=".$val["id"]; ?>">
 										<?php 
-											$srcImg = $val["photo"] == "" ? "/property/admin/img/omah_omahan.png" : "/property/admin/upload/rumah/".$val['photo'];
+											$srcImg = $val["photo"] == "" ? "/admin/img/omah_omahan.png" : "/admin/upload/rumah/".$val['photo'];
 										?>
 										<img src="<?php echo $srcImg; ?>" alt="<?php echo $val["nama"]; ?>" style="width:250px; height:220px;" class="img-responsive">
 										<h3 class="fh5co-work-title"><?php echo $val["nama"]; ?></h3>
