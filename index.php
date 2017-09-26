@@ -83,7 +83,7 @@
 								$searchPage = isset($_GET["search"]) ? $pageRedirect : "?page=".$page;
 
 								$select = array("rumah.*","type");
-								$orderBy = array("id" => "DESC");
+								$orderBy = array("nama" => "ASC");
 								$searchRumah = array(
 														"nama" 	=> 	$search,
 														"type"	=>	$type,
