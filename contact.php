@@ -1,4 +1,4 @@
-<?php require_once 'header.php'; ?>
+<?php require_once 'template/header.php'; ?>
 <body>
 	<div id="fh5co-page">
 		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
@@ -16,7 +16,7 @@
 
 			<div class="fh5co-footer">
 				<p><small>Copyright &copy; PropertyMedia 2017 <?php echo date("Y") > 2017 ? " - ".date("Y") : ""; ?>.</small></p>
-				<?php require_once 'sosial_media.php'; ?>
+				<?php require_once 'template/sosial_media.php'; ?>
 			</div>
 		</aside>
 
@@ -47,10 +47,6 @@
 							$sending = $model->insert($data);
 							if ($sending) {
 								echo "<script> alert('Data berhasil di Kirim'); </script>";
-								/*$nama = "";
-								$email = "";
-								$phone = "";
-								$message = "";*/
 	                        	echo "<script> document.location.href = 'contact.php'; </script>";
 							}
 						} else {
@@ -132,4 +128,4 @@
 		</div>
 	</div>
 </body>
-<?php require_once 'footer.php'; ?>
+<?php require_once 'template/footer.php'; ?>

@@ -1,5 +1,4 @@
-	<!-- jQuery -->
-	<script src="assets/js/jquery.min.js"></script>
+
 	<!-- jQuery Easing -->
 	<script src="assets/js/jquery.easing.1.3.js"></script>
 	<!-- Bootstrap -->

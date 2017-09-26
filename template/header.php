@@ -71,6 +71,7 @@
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
 	<script src="assets/js/respond.min.js"></script>
-	<![endif]-->
+	<![endif]-->	<!-- jQuery -->
+	<script src="assets/js/jquery.min.js"></script>
 
 	</head>
