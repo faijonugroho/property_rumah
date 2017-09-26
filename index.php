@@ -77,13 +77,13 @@
 					<!-- Product Rumah -->
 					<div class="row animate-box" data-animate-effect="fadeInLeft">
 						<?php
-								// $detailRedirect = isset($_GET["search"]) ? "?search=".$search."&type=".$type."&harga=".$harga : "";
 								$pageRedirect = isset($_GET["page"]) ? "?page=".$page."&search=".$search."&type=".$type."&harga=".$harga : "";
 								$page = isset($_GET["page"]) ? $page : 1;
 								$searchPage = isset($_GET["search"]) ? $pageRedirect : "?page=".$page;
 
 								$select = array("rumah.*","type");
-								$orderBy = array("id" => "DESC");
+								$orderBy = array("nama" => "ASC");
+								// $orderBy = false;
 								$searchRumah = array(
 														"nama" 	=> 	$search,
 														"type"	=>	$type,
