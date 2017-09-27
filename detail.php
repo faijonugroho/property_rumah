@@ -113,10 +113,10 @@
 		        </div>
 		        <div class="col-md-6 col-md-push-1 animate-box" data-animate-effect="fadeInLeft">
 		        	<?php 
-						$srcImg = $getByIdRumah["photo"] == "" ? "/property/admin/img/omah_omahan.png" : "/property/admin/upload/rumah/".$getByIdRumah['photo'];
+						$srcImg = $getByIdRumah["photo"] == "" ? "admin/img/omah_omahan.png" : "admin/upload/rumah/".$getByIdRumah['photo'];
 					?>
 					<div class="thumbnail">
-						<img src="<?php echo $srcImg; ?>" alt="Nama Rumah" style="width:450px; height:400px;" class="img-responsive">
+						<img src="<?php echo $srcImg; ?>" alt="<?php echo $getByIdRumah["nama"]; ?>" style="width:450px; height:400px;" class="img-responsive">
 					</div>
 					<p class="fh5co-lead animate-box" data-animate-effect="fadeInLeft">
 		          		Type: <?php echo $getByIdType["type"]; ?>
