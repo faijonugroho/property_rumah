@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 27, 2017 at 01:31 AM
+-- Generation Time: Sep 28, 2017 at 03:26 AM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -50,15 +50,18 @@ CREATE TABLE `info_about` (
   `profile` text NOT NULL,
   `email` varchar(150) NOT NULL,
   `alamat` text NOT NULL,
-  `no_telp` varchar(100) NOT NULL
+  `no_telp` varchar(100) NOT NULL,
+  `facebook` varchar(225) NOT NULL,
+  `twitter` varchar(225) NOT NULL,
+  `instagram` varchar(225) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `info_about`
 --
 
-INSERT INTO `info_about` (`id`, `strategi`, `visi`, `tujuan`, `misi`, `profile`, `email`, `alamat`, `no_telp`) VALUES
-(1, 'sdfg er', ' wertfge rte', ' werert', 'e fgergerfgwds', 'Perusahaan kami merupakan perusahan yang bergerak di bidang developer dan penjualan  properti rumah.', 'irwanto@gmail.com', 'Jl. Gatot subroto, Medan sumatera utara', '061-7723342');
+INSERT INTO `info_about` (`id`, `strategi`, `visi`, `tujuan`, `misi`, `profile`, `email`, `alamat`, `no_telp`, `facebook`, `twitter`, `instagram`) VALUES
+(1, 'sdfg er', ' wertfge rte', ' werert', 'e fgergerfgwds', 'Perusahaan kami merupakan perusahan yang bergerak di bidang developer dan penjualan  properti rumah.', 'irwanto@gmail.com', 'Jl. Gatot subroto, Medan sumatera utara', '061-7723342', 'https://www.facebook.com', 'https://twitter.com', 'https://instagram.com');
 
 -- --------------------------------------------------------
 
