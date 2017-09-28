@@ -24,7 +24,7 @@
 					);
 
 		$data = $model->findData($select,$where);
-		$dataChart = [intval($data[0]["Januari"]),intval($data[0]["Februari"]),intval($data[0]["Maret"]),intval($data[0]["Mei"]),intval($data[0]["Juni"]),intval($data[0]["Juli"]),intval($data[0]["Agustus"]),intval($data[0]["September"]),intval($data[0]["Oktober"]),intval($data[0]["Nopember"]),intval($data[0]["Desember"])];
+		$dataChart = [intval($data[0]["Januari"]),intval($data[0]["Februari"]),intval($data[0]["Maret"]),intval($data[0]["April"]),intval($data[0]["Mei"]),intval($data[0]["Juni"]),intval($data[0]["Juli"]),intval($data[0]["Agustus"]),intval($data[0]["September"]),intval($data[0]["Oktober"]),intval($data[0]["Nopember"]),intval($data[0]["Desember"])];
 		
 		$model->response->status = true;
 		$model->response->data = $dataChart;

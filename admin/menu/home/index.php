@@ -139,11 +139,11 @@
 			      //Boolean - Whether to show horizontal lines (except X axis)
 			      scaleShowHorizontalLines: true,
 			      //Boolean - Whether to show vertical lines (except Y axis)
-			      scaleShowVerticalLines  : true,
+			      scaleShowVerticalLines  : false,
 			      //Boolean - If there is a stroke on each bar
 			      barShowStroke           : true,
 			      //Number - Pixel width of the bar stroke
-			      barStrokeWidth          : 2,
+			      barStrokeWidth          : 5,
 			      //Number - Spacing between each of the X value sets
 			      barValueSpacing         : 5,
 			      //Number - Spacing between data sets within X values
