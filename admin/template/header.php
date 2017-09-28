@@ -101,12 +101,12 @@
           </li>
       
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">
-            <a class="nav-link nav-link-collapse <?php if($uri == 'about' || $uri == 'contact') { echo '';} else { echo 'collapsed'; } ?>" data-toggle="collapse" href="#settings" data-parent="#settings">
+            <a class="nav-link nav-link-collapse <?php if($uri == 'about' || $uri == 'contact' || $uri == 'sosmed') { echo '';} else { echo 'collapsed'; } ?>" data-toggle="collapse" href="#settings" data-parent="#settings">
               <i class="fa fa-gears"></i>&nbsp;
               <span class="nav-link-text">
                 Settings</span>
             </a>
-              <ul class="sidenav-second-level collapse <?php if($uri == 'about' || $uri == 'contact') { echo 'show';} ?> " id="settings">
+              <ul class="sidenav-second-level collapse <?php if($uri == 'about' || $uri == 'contact' || $uri == 'sosmed') { echo 'show';} ?> " id="settings">
                 <li class="nav-item <?php echo $uri == 'about' ? 'active' : ''; ?>">
                   <a href="?menu=about">
                     <i class="fa fa-dot-circle-o"></i>
@@ -117,6 +117,12 @@
                   <a href="?menu=contact">
                     <i class="fa fa-dot-circle-o"></i>
                     Kontak
+                  </a>
+                </li>
+                <li class="nav-item <?php echo $uri == 'sosmed' ? 'active' : ''; ?>">
+                  <a href="?menu=sosmed">
+                    <i class="fa fa-dot-circle-o"></i>
+                    Sosial Media
                   </a>
                 </li>
               </ul>
