@@ -25,7 +25,6 @@
 			</nav>
 
 			<div class="fh5co-footer">
-				<p><small>Copyright &copy; PropertyMedia 2017 <?php echo date("Y") > 2017 ? " - ".date("Y") : ""; ?>.</small></p>
 				<?php require_once 'template/sosial_media.php'; ?>
 			</div>
 		</aside>
