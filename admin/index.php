@@ -88,9 +88,9 @@
             <!-- Breadcrumbs -->
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="/property">Home</a>
+                <a href="/property/admin">Home</a>
               </li>
-              <li class="breadcrumb-item active">My Home</li>
+              <li class="breadcrumb-item active">Dashboard</li>
             </ol>
 
     <?php

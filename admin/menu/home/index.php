@@ -1,3 +1,9 @@
+<style type="text/css">
+    #barChart {
+        width: 100%;
+        height: 310px;
+    }
+</style>
 <!-- Icon Cards -->
 <?php 
 	$model = new Model_mysqli();
@@ -91,7 +97,7 @@
     <div class="row">
       <div class="col-md-12 my-auto">
         <div class="chart">
-            <canvas id="barChart" style="height:50%"></canvas>
+            <canvas id="barChart"></canvas>
         </div>
       </div>
     </div>
